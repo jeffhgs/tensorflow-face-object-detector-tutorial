@@ -16,13 +16,19 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
+import sys
 import os
+adirBase = os.getenv("adirBase")
+sys.path.append(os.path.join(adirBase,"models/research"))
+sys.path.append(os.path.join(adirBase,"models/research/slim"))
+
 import io
 import pandas as pd
 import tensorflow as tf
+from object_detection.utils import dataset_util as dataset_util
 
 from PIL import Image
-from object_detection.utils import dataset_util # from path
+#from object_detection.utils import dataset_util # from path
 from collections import namedtuple, OrderedDict # tf slim
 
 flags = tf.app.flags

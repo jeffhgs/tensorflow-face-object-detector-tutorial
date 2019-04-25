@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import sys
+import os
+adirBase = os.getenv("adirBase")
+sys.path.append(os.path.join(adirBase,"models/research"))
+sys.path.append(os.path.join(adirBase,"models/research/slim"))
 
 """
 This script crawls over 9263 training images and 1873 items
@@ -138,8 +143,14 @@ try:
 except Exception as e:
     pass
 
-rootdir_glob = Train_path + '/**/*' # Note the added asterisks # This will return absolute paths
-file_list = [f for f in iglob(rootdir_glob, recursive=True) if os.path.isfile(f)]
+import fnmatch
+import os
+
+
+file_list = []
+for root, dirnames, filenames in os.walk(Train_path):
+    for filename in fnmatch.filter(filenames, '*.xml'):
+        file_list.append(os.path.join(root, filename))
 
 train_annotations_index = os.path.join(curr_path, "data", "tf_wider_train", "annotations", "train.txt" )
 
@@ -173,8 +184,10 @@ except Exception as e:
     pass
 
 
-rootdir_glob = Train_path + '/**/*' # Note the added asterisks # This will return absolute paths
-file_list = [f for f in iglob(rootdir_glob, recursive=True) if os.path.isfile(f)]
+file_list = []
+for root, dirnames, filenames in os.walk(Train_path):
+    for filename in fnmatch.filter(filenames, '*.xml'):
+        file_list.append(os.path.join(root, filename))
 
 train_annotations_index = os.path.join(curr_path, "data", "tf_wider_val", "annotations", "val.txt" )
 
